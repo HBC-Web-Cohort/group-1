@@ -1,0 +1,1705 @@
+/* =====================================================
+   HarvestShare - style.css
+   All design for the produce-sharing website.
+   Light mode: greens, white and light cream.
+   Dark mode:  deep forest greens (see "body.dark" below).
+   Also includes right-to-left (RTL) rules for Dari.
+   ===================================================== */
+
+/* ---------- LIGHT MODE COLOURS (the default) ----------
+   These "CSS variables" are used all over the file.
+   Changing one value here changes the whole website. */
+:root {
+  --dark-green: #1b4332;      /* deep green used for panels/bands */
+  --green: #2d6a4f;           /* main brand green: buttons */
+  --bright-green: #40916c;    /* lighter green: icons, hovers */
+  --light-green: #b7e4c7;     /* soft green: highlights */
+  --pale-green: #eef6ec;      /* very pale green: section background */
+  --cream: #fdfaf2;           /* warm cream: page background */
+  --cream-dark: #f3ead3;      /* deeper cream: subtle fills */
+  --gold: #e9b44c;            /* harvest gold accent */
+
+  --surface: #ffffff;         /* cards, header, popups */
+  --surface-2: #fffefa;       /* form inputs */
+  --text: #26362a;            /* main text colour */
+  --heading: #1b4332;         /* heading text colour */
+  --muted: #5f7263;           /* softer text colour */
+  --border: #dbe7d6;          /* light borders */
+
+  --header-bg: rgba(253, 250, 242, 0.94);
+  --band-bg: #1b4332;         /* call-to-action band */
+  --footer-bg: #12291b;
+  --toast-bg: #1b4332;
+
+  --badge-bg: rgba(255, 255, 255, 0.92);
+  --badge-text: #1b4332;
+  --amber-bg: #f8e8c8;        /* "requested" badge background */
+  --amber-text: #8a5a12;      /* "requested" badge text */
+
+  --red: #c0453a;             /* error messages */
+  --error-bg: #fdf0ef;
+  --error-border: #f0c6c1;
+
+  --shadow: 0 8px 24px rgba(27, 67, 50, 0.10);
+  --shadow-hover: 0 16px 34px rgba(27, 67, 50, 0.16);
+  --radius: 16px;
+}
+
+/* ---------- DARK MODE COLOURS ----------
+   JavaScript adds the class "dark" to <body>.
+   These new values then replace the ones above. */
+body.dark {
+  --dark-green: #163827;
+  --green: #3f9d72;
+  --bright-green: #74c69d;
+  --light-green: #b7e4c7;
+  --pale-green: #152018;
+  --cream: #101a13;
+  --cream-dark: #2a3a2d;
+
+  --surface: #18241b;
+  --surface-2: #1d2b21;
+  --text: #e3eee5;
+  --heading: #eaf6ec;
+  --muted: #a4bba9;
+  --border: #2b3b2f;
+
+  --header-bg: rgba(16, 26, 19, 0.92);
+  --band-bg: #13231a;
+  --footer-bg: #0c140e;
+  --toast-bg: #2d6a4f;
+
+  --badge-bg: rgba(16, 26, 19, 0.88);
+  --badge-text: #eaf6ec;
+  --amber-bg: #44341a;
+  --amber-text: #f2c87a;
+
+  --red: #ff968c;
+  --error-bg: #3a211e;
+  --error-border: #6b3a35;
+
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.42);
+  --shadow-hover: 0 16px 34px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- Basic page setup ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth; /* gentle scrolling for anchor links */
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  background-color: var(--cream);
+  color: var(--text);
+  line-height: 1.6;
+  /* smooth fade when switching between light and dark mode */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* When Dari is selected, JavaScript adds this class so the
+   whole page uses a font that supports the Persian script. */
+body.lang-fa,
+body.lang-fa .logo-text,
+body.lang-fa h1,
+body.lang-fa h2,
+body.lang-fa h3,
+body.lang-fa h4,
+body.lang-fa .card-title,
+body.lang-fa .stat-number {
+  font-family: "Vazirmatn", "Inter", Tahoma, Arial, sans-serif;
+}
+
+/* Remove default margins on the elements we style ourselves */
+h1, h2, h3, h4, p, ul {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit; /* form controls use the same font as the page */
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Sections need breathing room below the sticky header when jumped to */
+section {
+  scroll-margin-top: 88px;
+}
+
+/* Highlight colour when selecting text */
+::selection {
+  background-color: var(--light-green);
+  color: #1b4332;
+}
+
+/* Visible outline for keyboard users */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid rgba(64, 145, 108, 0.55);
+  outline-offset: 2px;
+}
+
+/* Centre content and limit its width */
+.container {
+  width: min(1180px, 92%);
+  margin: 0 auto;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  font-weight: 600;
+  font-size: 0.98rem;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--green);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: var(--bright-green);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(27, 67, 50, 0.25);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.btn-outline:hover {
+  background-color: var(--pale-green);
+  transform: translateY(-2px);
+}
+
+.btn-light {
+  background-color: #ffffff;
+  color: #1b4332;
+}
+
+.btn-light:hover {
+  background-color: var(--light-green);
+  transform: translateY(-2px);
+}
+
+.btn-large {
+  width: 100%;
+  padding: 14px 26px;
+  font-size: 1.02rem;
+}
+
+/* ---------- Section headings ---------- */
+.section-heading {
+  text-align: center;
+  max-width: 660px;
+  margin: 0 auto 42px;
+}
+
+.eyebrow {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--bright-green);
+  margin-bottom: 10px;
+}
+
+.eyebrow-light {
+  color: var(--light-green);
+}
+
+.section-heading h2 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 2.15rem;
+  font-weight: 600;
+  color: var(--heading);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.section-heading p {
+  color: var(--muted);
+}
+
+/* ---------- Header & navigation ---------- */
+.site-header {
+  position: sticky; /* header stays visible while scrolling */
+  top: 0;
+  z-index: 50;
+  background-color: var(--header-bg);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 0;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background-color: var(--green);
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.logo-icon svg {
+  width: 23px;
+  height: 23px;
+}
+
+.logo-text {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--heading);
+  white-space: nowrap;
+}
+
+.logo-text strong {
+  font-weight: 700;
+  color: var(--green);
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-inline-start: auto; /* push the menu away from the logo */
+}
+
+.nav-link {
+  padding: 9px 14px;
+  border-radius: 999px;
+  font-weight: 500;
+  color: var(--text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  background-color: var(--pale-green);
+  color: var(--heading);
+}
+
+.nav-link.active {
+  color: var(--green);
+  font-weight: 700;
+  background-color: var(--pale-green);
+}
+
+/* The green "Share Produce" button in the menu */
+.nav-cta {
+  margin-inline-start: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background-color: var(--green);
+  color: #ffffff;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-cta:hover {
+  background-color: var(--bright-green);
+  transform: translateY(-1px);
+}
+
+/* ---------- Theme & language buttons ---------- */
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tool-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 42px;
+  min-width: 42px;
+  padding: 0 11px;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  background-color: var(--surface);
+  color: var(--heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+.tool-button:hover {
+  background-color: var(--pale-green);
+  border-color: var(--bright-green);
+  color: var(--green);
+  transform: translateY(-1px);
+}
+
+.tool-button svg {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+}
+
+.lang-button span {
+  min-width: 24px;
+  text-align: center;
+}
+
+/* "Made by" credits button in the header */
+.credits-button {
+  background-color: var(--pale-green);
+  border-color: var(--bright-green);
+  color: var(--green);
+}
+
+.credits-button:hover {
+  background-color: var(--green);
+  border-color: var(--green);
+  color: #ffffff;
+}
+
+/* ---------- Credits popup ---------- */
+.credits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.credits-list li {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background-color: var(--pale-green);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 11px 15px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.credits-list li:hover {
+  transform: translateX(3px);
+  background-color: var(--cream);
+}
+
+[dir="rtl"] .credits-list li:hover {
+  transform: translateX(-3px);
+}
+
+/* Round green circle with the first letter of each name */
+.credits-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--green);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.credits-name {
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.credits-note {
+  font-size: 0.86rem;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* Team names shown in the footer */
+.footer-team {
+  font-weight: 600;
+  color: var(--light-green);
+}
+
+/* Show the moon in light mode and the sun in dark mode */
+.icon-sun {
+  display: none;
+}
+
+body.dark .icon-sun {
+  display: block;
+}
+
+body.dark .icon-moon {
+  display: none;
+}
+
+/* Hamburger button: hidden on desktop */
+.menu-button {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background-color: var(--surface);
+  color: var(--heading);
+}
+
+.menu-button svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ---------- Hero section ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 72px 0 60px;
+  /* Soft leafy background glow */
+  background:
+    radial-gradient(560px 320px at 88% -4%, rgba(64, 145, 108, 0.22), transparent 65%),
+    radial-gradient(480px 300px at -6% 108%, rgba(233, 180, 76, 0.16), transparent 65%),
+    var(--cream);
+}
+
+.hero-inner {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 52px;
+  align-items: center;
+}
+
+.hero-text {
+  animation: fadeUp 0.6s ease both;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 15px;
+  border-radius: 999px;
+  background-color: var(--pale-green);
+  border: 1px solid var(--border);
+  color: var(--green);
+  font-size: 0.84rem;
+  font-weight: 600;
+  margin-bottom: 22px;
+}
+
+.hero-badge svg {
+  width: 16px;
+  height: 16px;
+}
+
+.hero h1 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 3.15rem;
+  font-weight: 600;
+  line-height: 1.12;
+  color: var(--heading);
+  margin-bottom: 20px;
+}
+
+.hero h1 .accent {
+  font-style: italic;
+  color: var(--bright-green);
+}
+
+.hero-subtitle {
+  font-size: 1.12rem;
+  color: var(--muted);
+  max-width: 520px;
+  margin-bottom: 30px;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* Hero photo on the right */
+.hero-media {
+  position: relative;
+  animation: fadeUp 0.6s ease 0.12s both;
+}
+
+.hero-media img {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  object-fit: cover;
+  border-radius: 26px;
+  box-shadow: var(--shadow-hover);
+}
+
+/* The small card floating over the photo */
+.hero-card {
+  position: absolute;
+  inset-inline-start: -18px; /* works on both LTR and RTL pages */
+  bottom: 26px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background-color: var(--surface);
+  border-radius: 16px;
+  padding: 14px 18px;
+  box-shadow: var(--shadow-hover);
+}
+
+.hero-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background-color: var(--pale-green);
+  color: var(--green);
+  flex-shrink: 0;
+}
+
+.hero-card-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.hero-card strong {
+  display: block;
+  color: var(--heading);
+  font-size: 0.98rem;
+  line-height: 1.3;
+}
+
+.hero-card small {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+/* Statistics row under the hero */
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px 56px;
+  margin-top: 56px;
+  padding-top: 30px;
+  border-top: 1px dashed var(--border);
+}
+
+.stat-number {
+  display: block;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--green);
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ---------- How it works ---------- */
+.how {
+  padding: 74px 0;
+  background-color: var(--surface);
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.step-card {
+  background-color: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 30px 26px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+
+.step-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background-color: var(--pale-green);
+  color: var(--green);
+  margin-bottom: 16px;
+}
+
+.step-icon svg {
+  width: 27px;
+  height: 27px;
+}
+
+.step-number {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--bright-green);
+  margin-bottom: 6px;
+}
+
+.step-card h3 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.28rem;
+  font-weight: 600;
+  color: var(--heading);
+  margin-bottom: 8px;
+}
+
+.step-card p {
+  color: var(--muted);
+  font-size: 0.96rem;
+}
+
+/* ---------- Browse section: toolbar & filters ---------- */
+.browse {
+  padding: 74px 0 84px;
+  background-color: var(--pale-green);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+  margin-bottom: 18px;
+}
+
+/* Search input with an icon inside */
+.search-box {
+  position: relative;
+  flex: 1 1 240px;
+}
+
+.search-box svg {
+  position: absolute;
+  inset-inline-start: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 19px;
+  height: 19px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 14px;
+  padding-inline-start: 42px; /* leave room for the icon */
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background-color: var(--cream);
+  color: var(--text);
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--bright-green);
+  box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.22);
+  background-color: var(--surface);
+}
+
+/* Category pill buttons */
+.filter-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background-color: var(--surface);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.92rem;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.pill:hover {
+  border-color: var(--bright-green);
+  color: var(--green);
+}
+
+.pill.active {
+  background-color: var(--green);
+  border-color: var(--green);
+  color: #ffffff;
+}
+
+/* Dropdown filters */
+.filter-select {
+  flex: 0 1 195px;
+  padding: 12px 14px;
+  padding-inline-end: 38px; /* room for our arrow */
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background-color: var(--cream);
+  color: var(--text);
+  appearance: none; /* hide the default arrow so we can draw our own */
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235f7263' stroke-width='2.4' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 13px center;
+  background-size: 15px;
+  cursor: pointer;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--bright-green);
+  box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.22);
+  background-color: var(--surface);
+}
+
+/* Dropdown lists must stay readable in dark mode */
+body.dark .filter-select option,
+body.dark .form-group select option {
+  background-color: #18241b;
+  color: #e3eee5;
+}
+
+.results-count {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 18px;
+}
+
+/* ---------- Produce cards ---------- */
+.produce-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background-color: var(--surface);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+.card-image {
+  position: relative;
+}
+
+.card-image img {
+  width: 100%;
+  height: 192px;
+  object-fit: cover;
+}
+
+/* Small labels sitting on top of the photo */
+.badge {
+  position: absolute;
+  top: 12px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.badge-category {
+  inset-inline-start: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+}
+
+/* The little coloured dot before "Fruit" / "Vegetable" */
+.badge-category::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--gold);
+}
+
+.badge-vegetable::before {
+  background-color: var(--bright-green);
+}
+
+.badge-status {
+  inset-inline-end: 12px;
+}
+
+.badge-available {
+  background-color: var(--green);
+  color: #ffffff;
+}
+
+.badge-requested {
+  background-color: var(--amber-bg);
+  color: var(--amber-text);
+}
+
+.card-body {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.card-title {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.28rem;
+  font-weight: 600;
+  color: var(--heading);
+  margin-bottom: 6px;
+}
+
+.card-desc {
+  color: var(--muted);
+  font-size: 0.93rem;
+  min-height: 46px; /* keeps cards in a row roughly the same height */
+  margin-bottom: 14px;
+}
+
+/* Location / gardener / quantity lines with icons */
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 6px;
+}
+
+.card-meta li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.92rem;
+  color: var(--text);
+}
+
+.card-meta svg {
+  width: 17px;
+  height: 17px;
+  color: var(--bright-green);
+  flex-shrink: 0;
+}
+
+/* Bottom row of the card: harvest info + request button */
+.card-footer {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.harvest-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.harvest-info svg {
+  width: 16px;
+  height: 16px;
+}
+
+.request-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 20px;
+  border: none;
+  border-radius: 999px;
+  background-color: var(--green);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.request-btn:hover {
+  background-color: var(--bright-green);
+  transform: translateY(-1px);
+}
+
+.request-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Style for a button that has already been requested */
+.request-btn:disabled {
+  background-color: var(--cream-dark);
+  color: var(--amber-text);
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Row that only appears on listings the visitor added themselves */
+.own-row {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+
+.remove-btn {
+  border: none;
+  background: none;
+  padding: 2px 4px;
+  color: var(--red);
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.remove-btn:hover {
+  opacity: 0.75;
+}
+
+/* ---------- Empty state (no results) ---------- */
+.empty-state {
+  text-align: center;
+  padding: 52px 20px;
+  background-color: var(--surface);
+  border: 1.5px dashed var(--border);
+  border-radius: 20px;
+}
+
+/* Make sure the HTML "hidden" attribute always wins */
+.empty-state[hidden] {
+  display: none;
+}
+
+.empty-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background-color: var(--pale-green);
+  color: var(--bright-green);
+  margin-bottom: 16px;
+}
+
+.empty-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.empty-state h3 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.4rem;
+  color: var(--heading);
+  margin-bottom: 8px;
+}
+
+.empty-state p {
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.noscript-note {
+  text-align: center;
+  color: var(--red);
+  margin-top: 16px;
+}
+
+/* ---------- Add produce section ---------- */
+.add-section {
+  padding: 80px 0;
+  background-color: var(--cream);
+}
+
+.add-inner {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 34px;
+  align-items: start;
+}
+
+/* Dark green information panel */
+.add-info {
+  background: linear-gradient(160deg, #2d6a4f 0%, #15372a 100%);
+  color: #ffffff;
+  border-radius: 24px;
+  padding: 38px 34px;
+  box-shadow: var(--shadow);
+}
+
+.add-info h2 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 14px;
+}
+
+.add-info > p {
+  color: #d9ecdc;
+  margin-bottom: 26px;
+}
+
+.tips-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  color: #eef7ee;
+  font-size: 0.97rem;
+}
+
+.tip-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.16);
+  color: var(--light-green);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.tip-check svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* White form card */
+.add-form {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: var(--shadow);
+}
+
+.add-form h3 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--heading);
+}
+
+.form-note {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin: 6px 0 22px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--heading);
+  margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background-color: var(--surface-2);
+  color: var(--text);
+}
+
+.form-group select {
+  appearance: none;
+  padding-inline-end: 38px;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235f7263' stroke-width='2.4' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 13px center;
+  background-size: 15px;
+  cursor: pointer;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--bright-green);
+  box-shadow: 0 0 0 3px rgba(64, 145, 108, 0.22);
+}
+
+/* Two fields side by side */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Field-level error styling (JavaScript adds the .error class) */
+.field-error {
+  display: none;
+  color: var(--red);
+  font-size: 0.82rem;
+  margin-top: 5px;
+}
+
+.form-group.error .field-error {
+  display: block;
+}
+
+.form-group.error input,
+.form-group.error select {
+  border-color: var(--red);
+  background-color: var(--error-bg);
+}
+
+/* Message box under the form: hidden while it is empty */
+.form-message {
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 0.94rem;
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+
+.form-message:empty {
+  display: none;
+}
+
+.form-message.success {
+  background-color: var(--pale-green);
+  color: var(--heading);
+  border: 1px solid var(--bright-green);
+}
+
+.form-message.error {
+  background-color: var(--error-bg);
+  color: var(--red);
+  border: 1px solid var(--error-border);
+}
+
+/* ---------- Call-to-action band ---------- */
+.cta-band {
+  background:
+    radial-gradient(500px 260px at 12% 0%, rgba(183, 228, 199, 0.22), transparent 65%),
+    radial-gradient(500px 260px at 88% 100%, rgba(233, 180, 76, 0.18), transparent 65%),
+    var(--band-bg);
+  color: #ffffff;
+  padding: 64px 0;
+  text-align: center;
+}
+
+.cta-inner h2 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 2.1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.cta-inner p {
+  color: #cfe6d2;
+  max-width: 540px;
+  margin: 0 auto 26px;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background-color: var(--footer-bg);
+  color: #c9dec9;
+  padding: 58px 0 0;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1.3fr;
+  gap: 36px;
+  padding-bottom: 40px;
+}
+
+.logo-footer .logo-text {
+  color: #ffffff;
+}
+
+.logo-footer .logo-text strong {
+  color: var(--light-green);
+}
+
+.footer-about p {
+  margin-top: 16px;
+  font-size: 0.95rem;
+  color: #a9c6ab;
+  max-width: 320px;
+}
+
+.footer-col h4 {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+}
+
+.footer-col a {
+  color: #c9dec9;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.footer-col a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.footer-col p {
+  font-size: 0.95rem;
+  color: #a9c6ab;
+  margin-bottom: 10px;
+}
+
+.footer-email {
+  color: var(--light-green);
+  font-weight: 600;
+  direction: ltr; /* email stays left-to-right even in Dari */
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 20px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.88rem;
+  color: #8fb392;
+}
+
+/* ---------- Request popup (modal) ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: rgba(10, 20, 13, 0.6);
+  backdrop-filter: blur(3px);
+}
+
+/* The "hidden" attribute must hide the overlay even though we set display:flex */
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  background-color: var(--surface);
+  border-radius: 22px;
+  padding: 32px 30px 28px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  animation: popIn 0.18s ease both;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  inset-inline-end: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--pale-green);
+  color: var(--heading);
+}
+
+.modal-close:hover {
+  background-color: var(--light-green);
+  color: #1b4332;
+}
+
+.modal-close svg {
+  width: 17px;
+  height: 17px;
+}
+
+.modal-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 15px;
+  background-color: var(--pale-green);
+  color: var(--green);
+  margin-bottom: 14px;
+}
+
+.modal-icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.modal h3 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--heading);
+  margin-bottom: 8px;
+}
+
+.modal-text {
+  color: var(--muted);
+  font-size: 0.96rem;
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+/* ---------- Toast confirmation message ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  z-index: 200;
+  transform: translate(-50%, 90px); /* starts hidden below the screen */
+  opacity: 0;
+  max-width: 92%;
+  background-color: var(--toast-bg);
+  color: #ffffff;
+  padding: 14px 24px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-align: center;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* JavaScript adds .show to slide the toast into view */
+.toast.show {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+/* ---------- Small animations ---------- */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* =====================================================
+   RIGHT-TO-LEFT (RTL) SUPPORT FOR DARI
+   The <html dir="rtl"> attribute flips the page.
+   These few rules fix the details that do not flip
+   automatically (like background arrow positions).
+   ===================================================== */
+[dir="rtl"] .filter-select,
+[dir="rtl"] .form-group select {
+  background-position: left 13px center;
+}
+
+[dir="rtl"] .eyebrow,
+[dir="rtl"] .step-number {
+  letter-spacing: normal; /* letter spacing looks wrong in Persian script */
+}
+
+[dir="rtl"] .hero-subtitle,
+[dir="rtl"] .cta-inner p {
+  margin-inline: 0 auto;
+}
+
+[dir="rtl"] .modal-actions {
+  justify-content: flex-start;
+}
+
+[dir="rtl"] .toast {
+  left: auto;
+  right: 50%;
+  transform: translate(50%, 90px);
+}
+
+[dir="rtl"] .toast.show {
+  transform: translate(50%, 0);
+}
+
+/* =====================================================
+   RESPONSIVE DESIGN
+   Adjust the layout for tablets and phones.
+   ===================================================== */
+
+/* Tablets and smaller laptops */
+@media (max-width: 1040px) {
+  .nav-link {
+    padding: 9px 10px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 980px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .hero h1 {
+    font-size: 2.6rem;
+  }
+
+  .hero-media img {
+    min-height: 300px;
+  }
+
+  .add-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Phones */
+@media (max-width: 860px) {
+  /* Show the hamburger button, turn the menu into a drop-down panel */
+  .menu-button {
+    display: inline-flex;
+  }
+
+  .main-nav {
+    display: none; /* hidden until JavaScript adds the .open class */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    background-color: var(--cream);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 18px 30px rgba(0, 0, 0, 0.18);
+    padding: 12px 4%;
+  }
+
+  .main-nav.open {
+    display: flex;
+  }
+
+  .nav-link,
+  .nav-cta {
+    padding: 12px 16px;
+  }
+
+  .nav-cta {
+    margin-inline-start: 0;
+    text-align: center;
+  }
+}
+
+@media (max-width: 760px) {
+  .logo-text {
+    font-size: 1.15rem;
+  }
+
+  .hero {
+    padding: 48px 0 44px;
+  }
+
+  .hero h1 {
+    font-size: 2.15rem;
+  }
+
+  .hero-card {
+    inset-inline-start: 12px;
+    bottom: 12px;
+    padding: 11px 14px;
+  }
+
+  .stats {
+    gap: 18px 32px;
+    margin-top: 40px;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading h2 {
+    font-size: 1.8rem;
+  }
+
+  /* Toolbar controls stack neatly */
+  .filter-select {
+    flex: 1 1 150px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .add-form {
+    padding: 26px 22px;
+  }
+
+  .add-info {
+    padding: 30px 24px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .modal-actions .btn {
+    width: 100%;
+  }
+}
+
+/* Very small phones: keep the header tidy */
+@media (max-width: 420px) {
+  .header-tools {
+    gap: 6px;
+  }
+
+  .tool-button {
+    padding: 0 8px;
+    min-width: 38px;
+    height: 38px;
+  }
+
+  .lang-button svg {
+    display: none; /* show just the language name to save space */
+  }
+
+  .menu-button {
+    width: 38px;
+    height: 38px;
+  }
+}

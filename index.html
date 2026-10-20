@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HarvestShare — Neighbourhood Produce Sharing</title>
+  <meta name="description" content="HarvestShare helps gardeners share extra fruit and vegetables with neighbours. Browse fresh local produce, request what you need, and list your own surplus.">
+  <meta name="theme-color" content="#1b4332">
+
+  <!-- Leaf icon shown in the browser tab -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='6' fill='%232d6a4f'/><path d='M12 19v-6m0 0c.3-3 2.2-5 5.5-5 0 3.5-2 5.5-5.5 5zm0-2C11.7 8 9.8 6.5 6.5 6.5c0 3.2 1.8 4.8 5.5 4.5z' stroke='white' stroke-width='1.8' fill='none' stroke-linecap='round'/></svg>">
+
+  <!-- Google Fonts: Fraunces + Inter for English, Vazirmatn for Dari (Persian script) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,600&family=Inter:wght@400;500;600;700&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Our own stylesheet (all design lives in style.css) -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ================= HEADER / NAVIGATION ================= -->
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <!-- Logo -->
+      <a href="#home" class="logo" aria-label="HarvestShare home">
+        <span class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 21v-7"/>
+            <path d="M12 14c.4-3.6 2.8-5.8 7-5.8 0 4.2-2.6 6.2-7 5.8z"/>
+            <path d="M12 11C11.6 7.6 9.4 5.6 5.2 5.6c0 4 2.4 5.8 6.8 5.4z"/>
+          </svg>
+        </span>
+        <span class="logo-text">Harvest<strong>Share</strong></span>
+      </a>
+
+      <!-- Navigation menu -->
+      <nav class="main-nav" id="mainNav">
+        <a href="#home" class="nav-link active" data-i18n="nav.home">Home</a>
+        <a href="#how" class="nav-link" data-i18n="nav.how">How It Works</a>
+        <a href="#browse" class="nav-link" data-i18n="nav.browse">Browse Produce</a>
+        <a href="#add" class="nav-cta" data-i18n="nav.share">Share Produce</a>
+      </nav>
+
+      <!-- Credits + theme + language buttons (always visible, even on phones) -->
+      <div class="header-tools">
+
+        <!-- "Made by" button: opens the team credits popup -->
+        <button type="button" class="tool-button credits-button" id="creditsButton" aria-label="Made by Nabizada, Yousofzai, Pakhtoon" title="Made by Nabizada, Yousofzai, Pakhtoon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="9" cy="8" r="3.4"/>
+            <path d="M2.8 20c.7-3.2 3.2-4.9 6.2-4.9s5.5 1.7 6.2 4.9"/>
+            <path d="M16.5 5.2a3.4 3.4 0 0 1 0 5.9M18.8 20c-.3-1.6-.9-2.9-1.8-3.8"/>
+          </svg>
+          <span data-i18n="credits.button">Made by</span>
+        </button>
+
+        <!-- Dark / light mode button -->
+        <button type="button" class="tool-button" id="themeButton" aria-label="Switch to dark mode" title="Switch theme">
+          <!-- Sun icon: shown in dark mode -->
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.2"/>
+            <path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/>
+          </svg>
+          <!-- Moon icon: shown in light mode -->
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 14.2A8.2 8.2 0 0 1 9.8 4 8.4 8.4 0 1 0 20 14.2z"/>
+          </svg>
+        </button>
+
+        <!-- Language button: shows the language you can switch to -->
+        <button type="button" class="tool-button lang-button" id="langButton" aria-label="Switch language to Dari" title="Change language">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M3 12h18M12 3c2.4 2.5 3.6 5.6 3.6 9S14.4 18.5 12 21c-2.4-2.5-3.6-5.6-3.6-9S9.6 5.5 12 3z"/>
+          </svg>
+          <span id="langLabel">دری</span>
+        </button>
+
+        <!-- Hamburger button (only visible on small screens) -->
+        <button class="menu-button" id="menuButton" aria-label="Open menu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+
+      </div>
+
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= HERO SECTION ================= -->
+    <section class="hero" id="home">
+      <div class="container">
+
+        <div class="hero-inner">
+          <!-- Hero text -->
+          <div class="hero-text">
+            <span class="hero-badge">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 21v-7"/>
+                <path d="M12 14c.4-3.6 2.8-5.8 7-5.8 0 4.2-2.6 6.2-7 5.8z"/>
+                <path d="M12 11C11.6 7.6 9.4 5.6 5.2 5.6c0 4 2.4 5.8 6.8 5.4z"/>
+              </svg>
+              <span data-i18n="hero.badge">Community produce exchange</span>
+            </span>
+
+            <h1><span data-i18n="hero.title1">Fresh from the garden,</span> <span class="accent" data-i18n="hero.title2">shared with neighbours.</span></h1>
+
+            <p class="hero-subtitle" data-i18n="hero.subtitle">
+              HarvestShare helps gardeners list their extra fruit and vegetables so people nearby
+              can enjoy them — less food waste, fresher dinners, and friendlier streets.
+            </p>
+
+            <div class="hero-buttons">
+              <a href="#browse" class="btn btn-primary" data-i18n="hero.browseBtn">Browse Produce</a>
+              <a href="#add" class="btn btn-outline" data-i18n="hero.shareBtn">Share Your Harvest</a>
+            </div>
+          </div>
+
+          <!-- Hero image with a small floating info card -->
+          <div class="hero-media">
+            <img
+              src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1000&q=80"
+              alt="Hands holding a young green seedling in garden soil"
+              onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1000&q=80';">
+            <div class="hero-card">
+              <span class="hero-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 8h14l-1.4 11a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 8z"/>
+                  <path d="M9 10V6a3 3 0 0 1 6 0v4"/>
+                </svg>
+              </span>
+              <div>
+                <strong><span id="freshCount">0</span> <span data-i18n="hero.available">listings available</span></strong>
+                <small data-i18n="hero.availableSub">Shared by gardeners near you</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Small statistics row -->
+        <div class="stats">
+          <div class="stat">
+            <span class="stat-number" id="statListings">0</span>
+            <span class="stat-label" data-i18n="stats.listings">Fresh listings</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">350+</span>
+            <span class="stat-label" data-i18n="stats.neighbours">Neighbours sharing</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-i18n="stats.kg">480 kg</span>
+            <span class="stat-label" data-i18n="stats.rescued">Produce rescued</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">0</span>
+            <span class="stat-label" data-i18n="stats.waste">Good food wasted</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= HOW IT WORKS ================= -->
+    <section class="how" id="how">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow" data-i18n="how.eyebrow">How it works</span>
+          <h2 data-i18n="how.title">Sharing in three simple steps</h2>
+          <p data-i18n="how.subtitle">No accounts, no payments, no fuss. Just gardeners and neighbours helping each other out.</p>
+        </div>
+
+        <div class="steps">
+          <!-- Step 1 -->
+          <div class="step-card">
+            <span class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 21v-7"/>
+                <path d="M12 14c.4-3.6 2.8-5.8 7-5.8 0 4.2-2.6 6.2-7 5.8z"/>
+                <path d="M12 11C11.6 7.6 9.4 5.6 5.2 5.6c0 4 2.4 5.8 6.8 5.4z"/>
+              </svg>
+            </span>
+            <span class="step-number" data-i18n="step1.number">Step 1</span>
+            <h3 data-i18n="step1.title">List your extras</h3>
+            <p data-i18n="step1.text">Gardeners add surplus fruit and vegetables with the simple form below — it takes less than a minute.</p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="step-card">
+            <span class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7"/>
+                <path d="M21 21l-4.3-4.3"/>
+              </svg>
+            </span>
+            <span class="step-number" data-i18n="step2.number">Step 2</span>
+            <h3 data-i18n="step2.title">Browse &amp; request</h3>
+            <p data-i18n="step2.text">Neighbours search, filter by category and area, then send a request for something they would love to cook.</p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="step-card">
+            <span class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 20.3S4.6 15.9 2.7 11.3C1.5 8.4 3.3 5.2 6.3 5.2c2 0 3.6 1.1 5.7 3.3 2.1-2.2 3.7-3.3 5.7-3.3 3 0 4.8 3.2 3.6 6.1C19.4 15.9 12 20.3 12 20.3z"/>
+              </svg>
+            </span>
+            <span class="step-number" data-i18n="step3.number">Step 3</span>
+            <h3 data-i18n="step3.title">Meet &amp; share</h3>
+            <p data-i18n="step3.text">Arrange a quick doorstep pickup. Less waste, fresher food, and maybe a new friend on your street.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BROWSE PRODUCE ================= -->
+    <section class="browse" id="browse">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow" data-i18n="browse.eyebrow">Fresh near you</span>
+          <h2 data-i18n="browse.title">Browse neighbourhood produce</h2>
+          <p data-i18n="browse.subtitle">Search by name, or filter by category, location and availability to find something tasty nearby.</p>
+        </div>
+
+        <!-- Search and filter toolbar -->
+        <div class="toolbar">
+          <!-- Search box -->
+          <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"/>
+              <path d="M21 21l-4.3-4.3"/>
+            </svg>
+            <input type="text" id="searchInput" data-i18n-placeholder="search.placeholder" placeholder="Search produce by name..." aria-label="Search produce by name">
+          </div>
+
+          <!-- Category filter buttons -->
+          <div class="filter-pills" role="group" aria-label="Filter by category">
+            <button type="button" class="pill active" data-category="All" data-i18n="filter.all">All</button>
+            <button type="button" class="pill" data-category="Fruit" data-i18n="filter.fruits">Fruits</button>
+            <button type="button" class="pill" data-category="Vegetable" data-i18n="filter.vegetables">Vegetables</button>
+          </div>
+
+          <!-- Location filter (options are built by JavaScript) -->
+          <select id="locationFilter" class="filter-select" aria-label="Filter by location">
+            <option value="All locations">All locations</option>
+          </select>
+
+          <!-- Availability filter -->
+          <select id="availabilityFilter" class="filter-select" aria-label="Filter by availability">
+            <option value="All" data-i18n="filter.anyStatus">Any availability</option>
+            <option value="Available" data-i18n="filter.availableOnly">Available only</option>
+            <option value="Requested" data-i18n="filter.requestedOnly">Already requested</option>
+          </select>
+        </div>
+
+        <!-- "Showing X of Y listings" text, updated by JavaScript -->
+        <p class="results-count" id="resultsCount" aria-live="polite"></p>
+
+        <!-- Produce cards are inserted here by JavaScript -->
+        <div class="produce-grid" id="produceGrid"></div>
+
+        <!-- Shown when no produce matches the search/filters -->
+        <div class="empty-state" id="emptyState" hidden>
+          <span class="empty-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 21v-7"/>
+              <path d="M12 14c.4-3.6 2.8-5.8 7-5.8 0 4.2-2.6 6.2-7 5.8z"/>
+              <path d="M12 11C11.6 7.6 9.4 5.6 5.2 5.6c0 4 2.4 5.8 6.8 5.4z"/>
+            </svg>
+          </span>
+          <h3 data-i18n="empty.title">No produce found</h3>
+          <p data-i18n="empty.text">Try a different search word, or clear the filters to see everything.</p>
+          <button type="button" class="btn btn-outline" id="clearFilters" data-i18n="empty.button">Clear all filters</button>
+        </div>
+
+        <noscript>
+          <p class="noscript-note">Please enable JavaScript in your browser to see the produce listings.</p>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- ================= ADD PRODUCE FORM ================= -->
+    <section class="add-section" id="add">
+      <div class="container add-inner">
+
+        <!-- Left side: explanation and tips -->
+        <div class="add-info">
+          <span class="eyebrow eyebrow-light" data-i18n="add.eyebrow">For gardeners</span>
+          <h2 data-i18n="add.title">Share your extra produce</h2>
+          <p data-i18n="add.text">
+            Glut of courgettes? Apple tree working overtime? Add a listing and a neighbour
+            will happily take the extras off your hands.
+          </p>
+          <ul class="tips-list">
+            <li>
+              <span class="tip-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+              <span data-i18n="add.tip1">Only list produce you would happily eat yourself.</span>
+            </li>
+            <li>
+              <span class="tip-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+              <span data-i18n="add.tip2">Give a clear quantity, like "2 kg" or "6 pieces".</span>
+            </li>
+            <li>
+              <span class="tip-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+              <span data-i18n="add.tip3">Say when it was picked so neighbours know it is fresh.</span>
+            </li>
+            <li>
+              <span class="tip-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg></span>
+              <span data-i18n="add.tip4">Your listing is saved in the browser, so it stays after a refresh.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right side: the form. "novalidate" means our own JavaScript does the checking. -->
+        <form class="add-form" id="addForm" novalidate>
+          <h3 data-i18n="form.title">Add a new listing</h3>
+          <p class="form-note" data-i18n="form.note">Fields marked * are required.</p>
+
+          <!-- Produce name -->
+          <div class="form-group">
+            <label for="fName" data-i18n="form.name">Produce name *</label>
+            <input type="text" id="fName" data-i18n-placeholder="form.namePh" placeholder="e.g. Cherry Tomatoes">
+            <small class="field-error" data-i18n="error.name">Please enter the name of the produce.</small>
+          </div>
+
+          <!-- Category + Quantity side by side -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fCategory" data-i18n="form.category">Category *</label>
+              <select id="fCategory">
+                <option value="" data-i18n="form.chooseCategory">Choose a category</option>
+                <option value="Fruit" data-i18n="cat.fruit">Fruit</option>
+                <option value="Vegetable" data-i18n="cat.vegetable">Vegetable</option>
+              </select>
+              <small class="field-error" data-i18n="error.category">Please choose a category.</small>
+            </div>
+            <div class="form-group">
+              <label for="fQuantity" data-i18n="form.quantity">Quantity *</label>
+              <input type="text" id="fQuantity" data-i18n-placeholder="form.quantityPh" placeholder="e.g. 2 kg or 6 pieces">
+              <small class="field-error" data-i18n="error.quantity">Please enter a quantity.</small>
+            </div>
+          </div>
+
+          <!-- Location + Gardener name side by side -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fLocation" data-i18n="form.location">Location *</label>
+              <input type="text" id="fLocation" data-i18n-placeholder="form.locationPh" placeholder="e.g. Maplewood">
+              <small class="field-error" data-i18n="error.location">Please enter your area or neighbourhood.</small>
+            </div>
+            <div class="form-group">
+              <label for="fGardener" data-i18n="form.gardener">Your name *</label>
+              <input type="text" id="fGardener" data-i18n-placeholder="form.gardenerPh" placeholder="e.g. Alex Johnson">
+              <small class="field-error" data-i18n="error.gardener">Please enter your name.</small>
+            </div>
+          </div>
+
+          <!-- Harvest time + optional photo URL -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fHarvest" data-i18n="form.harvest">When was it picked?</label>
+              <select id="fHarvest">
+                <option value="Picked today" data-i18n="harvest.today">Picked today</option>
+                <option value="Picked yesterday" data-i18n="harvest.yesterday">Picked yesterday</option>
+                <option value="Picked this week" data-i18n="harvest.week">Picked this week</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="fImage" data-i18n="form.photo">Photo URL (optional)</label>
+              <input type="url" id="fImage" placeholder="https://example.com/photo.jpg">
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="form-group">
+            <label for="fDescription" data-i18n="form.description">Short description (optional)</label>
+            <textarea id="fDescription" rows="3" data-i18n-placeholder="form.descriptionPh" placeholder="Tell neighbours a little about it..."></textarea>
+          </div>
+
+          <!-- Success / error message area (filled by JavaScript) -->
+          <p class="form-message" id="formMessage" aria-live="polite"></p>
+
+          <button type="submit" class="btn btn-primary btn-large" data-i18n="form.submit">Add Listing</button>
+        </form>
+
+      </div>
+    </section>
+
+    <!-- ================= CALL TO ACTION BAND ================= -->
+    <section class="cta-band">
+      <div class="container cta-inner">
+        <h2 data-i18n="cta.title">More tomatoes than you can eat?</h2>
+        <p data-i18n="cta.text">Somewhere on your street, a neighbour is dreaming of exactly those tomatoes.</p>
+        <a href="#add" class="btn btn-light" data-i18n="cta.button">Share Your Harvest</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+
+      <!-- About -->
+      <div class="footer-about">
+        <a href="#home" class="logo logo-footer">
+          <span class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 21v-7"/>
+              <path d="M12 14c.4-3.6 2.8-5.8 7-5.8 0 4.2-2.6 6.2-7 5.8z"/>
+              <path d="M12 11C11.6 7.6 9.4 5.6 5.2 5.6c0 4 2.4 5.8 6.8 5.4z"/>
+            </svg>
+          </span>
+          <span class="logo-text">Harvest<strong>Share</strong></span>
+        </a>
+        <p data-i18n="footer.about">
+          A friendly neighbourhood project that connects gardeners with surplus produce
+          to neighbours who will enjoy it. Fresh food, zero waste.
+        </p>
+      </div>
+
+      <!-- Quick links -->
+      <div class="footer-col">
+        <h4 data-i18n="footer.quickTitle">Quick Links</h4>
+        <ul>
+          <li><a href="#home" data-i18n="nav.home">Home</a></li>
+          <li><a href="#how" data-i18n="nav.how">How It Works</a></li>
+          <li><a href="#browse" data-i18n="nav.browse">Browse Produce</a></li>
+          <li><a href="#add" data-i18n="nav.share">Share Produce</a></li>
+        </ul>
+      </div>
+
+      <!-- Category shortcuts (these also set the filter, using JavaScript) -->
+      <div class="footer-col">
+        <h4 data-i18n="footer.catTitle">Categories</h4>
+        <ul>
+          <li><a href="#browse" class="footer-cat" data-category="Fruit" data-i18n="footer.catFruit">Fresh Fruits</a></li>
+          <li><a href="#browse" class="footer-cat" data-category="Vegetable" data-i18n="footer.catVeg">Fresh Vegetables</a></li>
+          <li><a href="#browse" class="footer-cat" data-category="All" data-i18n="footer.catAll">Everything</a></li>
+        </ul>
+      </div>
+
+      <!-- Project information -->
+      <div class="footer-col">
+        <h4 data-i18n="footer.projectTitle">About This Project</h4>
+        <p data-i18n="footer.projectText">
+          Final course project built with plain HTML, CSS and JavaScript only —
+          no frameworks and no backend. Just open index.html in a browser.
+        </p>
+        <p class="footer-email">hello@harvestshare.example</p>
+      </div>
+
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© <span id="year">2026</span> <span data-i18n="footer.rights">HarvestShare. Made for learning.</span></p>
+      <p class="footer-team"><span data-i18n="credits.button">Made by</span>: Nabizada, Yousofzai, Pakhtoon</p>
+    </div>
+  </footer>
+
+  <!-- ================= REQUEST POPUP (MODAL) ================= -->
+  <div class="modal-overlay" id="requestModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button type="button" class="modal-close" id="closeModal" aria-label="Close popup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+
+      <span class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 8h14l-1.4 11a2 2 0 0 1-2 1.8H8.4a2 2 0 0 1-2-1.8L5 8z"/>
+          <path d="M9 10V6a3 3 0 0 1 6 0v4"/>
+        </svg>
+      </span>
+
+      <h3 id="modalTitle">Request produce</h3>
+      <p class="modal-text" id="modalText"></p>
+
+      <form id="requestForm" novalidate>
+        <div class="form-group">
+          <label for="requestName" data-i18n="modal.name">Your name *</label>
+          <input type="text" id="requestName" data-i18n-placeholder="modal.namePh" placeholder="e.g. Sam Taylor">
+        </div>
+        <div class="form-group">
+          <label for="requestNote" data-i18n="modal.note">Message for the gardener (optional)</label>
+          <textarea id="requestNote" rows="2" data-i18n-placeholder="modal.notePh" placeholder="e.g. I can collect this evening after 6pm."></textarea>
+        </div>
+
+        <p class="form-message" id="requestMessage" aria-live="polite"></p>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" id="cancelRequest" data-i18n="modal.cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-i18n="modal.send">Send Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= CREDITS POPUP (TEAM MEMBERS) ================= -->
+  <div class="modal-overlay" id="creditsModal" hidden>
+    <div class="modal modal-credits" role="dialog" aria-modal="true" aria-labelledby="creditsTitle">
+      <button type="button" class="modal-close" id="closeCredits" aria-label="Close popup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+
+      <span class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="9" cy="8" r="3.4"/>
+          <path d="M2.8 20c.7-3.2 3.2-4.9 6.2-4.9s5.5 1.7 6.2 4.9"/>
+          <path d="M16.5 5.2a3.4 3.4 0 0 1 0 5.9M18.8 20c-.3-1.6-.9-2.9-1.8-3.8"/>
+        </svg>
+      </span>
+
+      <h3 id="creditsTitle" data-i18n="credits.title">Made by</h3>
+      <p class="modal-text" data-i18n="credits.text">This HarvestShare project was designed and built by our team for the final course project.</p>
+
+      <!-- The three team members -->
+      <ul class="credits-list">
+        <li>
+          <span class="credits-avatar">N</span>
+          <span class="credits-name" data-i18n="credits.name1">Nabizada</span>
+        </li>
+        <li>
+          <span class="credits-avatar">Y</span>
+          <span class="credits-name" data-i18n="credits.name2">Yousofzai</span>
+        </li>
+        <li>
+          <span class="credits-avatar">P</span>
+          <span class="credits-name" data-i18n="credits.name3">Pakhtoon</span>
+        </li>
+      </ul>
+
+      <p class="credits-note" data-i18n="credits.note">Built with HTML, CSS and vanilla JavaScript only.</p>
+
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" id="okCredits" data-i18n="credits.close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Small confirmation message that slides in at the bottom of the screen -->
+  <div class="toast" id="toast" aria-live="polite"></div>
+
+  <!-- Our JavaScript (all functionality lives in script.js) -->
+  <script src="script.js"></script>
+</body>
+</html>
