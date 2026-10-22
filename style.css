@@ -10,37 +10,37 @@
    These "CSS variables" are used all over the file.
    Changing one value here changes the whole website. */
 :root {
-  --dark-green: #1b4332;      /* deep green used for panels/bands */
-  --green: #2d6a4f;           /* main brand green: buttons */
-  --bright-green: #40916c;    /* lighter green: icons, hovers */
-  --light-green: #b7e4c7;     /* soft green: highlights */
-  --pale-green: #eef6ec;      /* very pale green: section background */
-  --cream: #fdfaf2;           /* warm cream: page background */
-  --cream-dark: #f3ead3;      /* deeper cream: subtle fills */
-  --gold: #e9b44c;            /* harvest gold accent */
+  --dark-green: #1b4332; /* deep green used for panels/bands */
+  --green: #2d6a4f; /* main brand green: buttons */
+  --bright-green: #40916c; /* lighter green: icons, hovers */
+  --light-green: #b7e4c7; /* soft green: highlights */
+  --pale-green: #eef6ec; /* very pale green: section background */
+  --cream: #fdfaf2; /* warm cream: page background */
+  --cream-dark: #f3ead3; /* deeper cream: subtle fills */
+  --gold: #e9b44c; /* harvest gold accent */
 
-  --surface: #ffffff;         /* cards, header, popups */
-  --surface-2: #fffefa;       /* form inputs */
-  --text: #26362a;            /* main text colour */
-  --heading: #1b4332;         /* heading text colour */
-  --muted: #5f7263;           /* softer text colour */
-  --border: #dbe7d6;          /* light borders */
+  --surface: #ffffff; /* cards, header, popups */
+  --surface-2: #fffefa; /* form inputs */
+  --text: #26362a; /* main text colour */
+  --heading: #1b4332; /* heading text colour */
+  --muted: #5f7263; /* softer text colour */
+  --border: #dbe7d6; /* light borders */
 
   --header-bg: rgba(253, 250, 242, 0.94);
-  --band-bg: #1b4332;         /* call-to-action band */
+  --band-bg: #1b4332; /* call-to-action band */
   --footer-bg: #12291b;
   --toast-bg: #1b4332;
 
   --badge-bg: rgba(255, 255, 255, 0.92);
   --badge-text: #1b4332;
-  --amber-bg: #f8e8c8;        /* "requested" badge background */
-  --amber-text: #8a5a12;      /* "requested" badge text */
+  --amber-bg: #f8e8c8; /* "requested" badge background */
+  --amber-text: #8a5a12; /* "requested" badge text */
 
-  --red: #c0453a;             /* error messages */
+  --red: #c0453a; /* error messages */
   --error-bg: #fdf0ef;
   --error-border: #f0c6c1;
 
-  --shadow: 0 8px 24px rgba(27, 67, 50, 0.10);
+  --shadow: 0 8px 24px rgba(27, 67, 50, 0.1);
   --shadow-hover: 0 16px 34px rgba(27, 67, 50, 0.16);
   --radius: 16px;
 }
@@ -100,7 +100,9 @@ body {
   color: var(--text);
   line-height: 1.6;
   /* smooth fade when switching between light and dark mode */
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 /* When Dari is selected, JavaScript adds this class so the
@@ -117,7 +119,12 @@ body.lang-fa .stat-number {
 }
 
 /* Remove default margins on the elements we style ourselves */
-h1, h2, h3, h4, p, ul {
+h1,
+h2,
+h3,
+h4,
+p,
+ul {
   margin: 0;
 }
 
@@ -182,7 +189,11 @@ button:focus-visible {
   border: 2px solid transparent;
   font-weight: 600;
   font-size: 0.98rem;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .btn-primary {
@@ -323,7 +334,9 @@ button:focus-visible {
   border-radius: 999px;
   font-weight: 500;
   color: var(--text);
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
   white-space: nowrap;
 }
 
@@ -347,7 +360,9 @@ button:focus-visible {
   color: #ffffff;
   font-weight: 600;
   white-space: nowrap;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .nav-cta:hover {
@@ -376,7 +391,11 @@ button:focus-visible {
   color: var(--heading);
   font-size: 0.88rem;
   font-weight: 700;
-  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    color 0.2s ease;
 }
 
 .tool-button:hover {
@@ -418,24 +437,122 @@ button:focus-visible {
   margin-bottom: 18px;
 }
 
-.credits-list li {
-  display: flex;
-  align-items: center;
-  gap: 13px;
+.credits-item {
   background-color: var(--pale-green);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 11px 15px;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  overflow: hidden;
+  transition: border-color 0.2s ease;
 }
 
-.credits-list li:hover {
-  transform: translateX(3px);
+.credits-item.open {
+  border-color: var(--bright-green);
+}
+
+/* The clickable name row */
+.credits-person {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  padding: 11px 15px;
+  border: none;
+  background: none;
+  text-align: start;
+  transition: background-color 0.2s ease;
+}
+
+.credits-person:hover {
   background-color: var(--cream);
 }
 
-[dir="rtl"] .credits-list li:hover {
-  transform: translateX(-3px);
+.credits-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.credits-hint {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* Little arrow that turns when the row is open */
+.credits-arrow {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--green);
+  transition: transform 0.25s ease;
+}
+
+.credits-item.open .credits-arrow {
+  transform: rotate(180deg);
+}
+
+/* The hidden contact area */
+.credits-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 15px 13px;
+}
+
+.credits-contact[hidden] {
+  display: none;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 13px;
+  border-radius: 12px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.contact-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  border-color: var(--bright-green);
+}
+
+.contact-link svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.contact-whatsapp svg {
+  color: #25d366; /* official WhatsApp green */
+}
+
+.contact-email svg {
+  color: var(--green);
+}
+
+.contact-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.contact-text strong {
+  font-size: 0.9rem;
+  color: var(--heading);
+}
+
+.contact-text small {
+  font-size: 0.82rem;
+  color: var(--muted);
+  overflow-wrap: anywhere; /* long emails wrap instead of overflowing */
 }
 
 /* Round green circle with the first letter of each name */
@@ -509,8 +626,16 @@ body.dark .icon-moon {
   padding: 72px 0 60px;
   /* Soft leafy background glow */
   background:
-    radial-gradient(560px 320px at 88% -4%, rgba(64, 145, 108, 0.22), transparent 65%),
-    radial-gradient(480px 300px at -6% 108%, rgba(233, 180, 76, 0.16), transparent 65%),
+    radial-gradient(
+      560px 320px at 88% -4%,
+      rgba(64, 145, 108, 0.22),
+      transparent 65%
+    ),
+    radial-gradient(
+      480px 300px at -6% 108%,
+      rgba(233, 180, 76, 0.16),
+      transparent 65%
+    ),
     var(--cream);
 }
 
@@ -670,7 +795,9 @@ body.dark .icon-moon {
   border: 1px solid var(--border);
   border-radius: 20px;
   padding: 30px 26px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .step-card:hover {
@@ -786,7 +913,10 @@ body.dark .icon-moon {
   color: var(--text);
   font-weight: 600;
   font-size: 0.92rem;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .pill:hover {
@@ -851,7 +981,9 @@ body.dark .form-group select option {
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 .card:hover {
@@ -996,7 +1128,9 @@ body.dark .form-group select option {
   font-weight: 600;
   font-size: 0.92rem;
   white-space: nowrap;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .request-btn:hover {
@@ -1272,8 +1406,16 @@ body.dark .form-group select option {
 /* ---------- Call-to-action band ---------- */
 .cta-band {
   background:
-    radial-gradient(500px 260px at 12% 0%, rgba(183, 228, 199, 0.22), transparent 65%),
-    radial-gradient(500px 260px at 88% 100%, rgba(233, 180, 76, 0.18), transparent 65%),
+    radial-gradient(
+      500px 260px at 12% 0%,
+      rgba(183, 228, 199, 0.22),
+      transparent 65%
+    ),
+    radial-gradient(
+      500px 260px at 88% 100%,
+      rgba(233, 180, 76, 0.18),
+      transparent 65%
+    ),
     var(--band-bg);
   color: #ffffff;
   padding: 64px 0;
@@ -1478,7 +1620,9 @@ body.dark .form-group select option {
   font-weight: 500;
   text-align: center;
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
   pointer-events: none;
 }
 
